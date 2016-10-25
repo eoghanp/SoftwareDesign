@@ -1,16 +1,19 @@
 package Vehicle;
 
-public class OffRoader implements Vehicle {
+public class OffRoader extends Vehicle {
 
 	private String model;
 	private int seats;
 	private String specialFeatures;
+	private String storageSpace;
 
 	
-	public OffRoader(String model, int seats, String specialFeatures) {
+	public OffRoader(String model, int seats, String specialFeatures, String storageSpace) {
+		super(storageSpace, seats, storageSpace, storageSpace);
 		this.model = model;
 		this.seats = seats;
 		this.specialFeatures = specialFeatures;
+		this.storageSpace = storageSpace;
 	}
 
 	@Override
@@ -43,6 +46,17 @@ public class OffRoader implements Vehicle {
 	@Override
 	public void setSpecialFeatures(String specialFeatures) {
 		this.specialFeatures = specialFeatures;
+		
+	}
+
+	@Override
+	public String getStorageSpace() {
+		return storageSpace;
+	}
+
+	@Override
+	public void setStorageSpace(String storageSpace) {
+		this.storageSpace = storageSpace;
 		
 	}
 
