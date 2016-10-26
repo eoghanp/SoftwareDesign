@@ -19,32 +19,22 @@ public class FileSystemReceiverUtil {
 	
 	public static FileSystemReceiver getGUIUser(String msg) {
 		
-		String osName = System.getProperty("os.name");
-		System.out.println("Underlying OS is:" + osName);
 		if (msg.equals("customerClicked")) {
-			System.out.println("Customer");
+			System.out.println(msg);
 			return new CustomerUIFileReceiver();
 		} else {
-			System.out.println("Employee");
+			System.out.println(msg);
 			return new EmployeeUIFileReceiver();
 		}
-		
-		
-		
-		/*
-		if ("customerClicked".equals(MainMenuUI.getUserTypesList().get(0).getUser())) {
-			JButton b = new JButton("Button 1");
-	        b.addActionListener(listener);
-	        System.out.println("ReceiverUtil");
-			return new CustomerUIFileReceiver();
-		} else {
-			return new EmployeeUIFileReceiver();
-		}
-		*/
-		
 	}
 	
-
-
-
+	/*public FileSystemReceiver fsUI(ActionEvent e) {
+		
+		if ("customerClciked".equals(e.getActionCommand())) {
+			return new CustomerUIFileReceiver();
+		} else {
+			return new EmployeeUIFileReceiver();
+		}
+			
+	}*/
 }
