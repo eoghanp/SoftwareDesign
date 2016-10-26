@@ -10,8 +10,6 @@ import java.io.PrintWriter;
 
 public class Receipt extends ReceiptComponent {
 
-	private double time;
-	private String date;
 	private String vehicleType;
 	private String vehicleRentalDate;
 	private String vehicleReturnDate;
@@ -19,23 +17,19 @@ public class Receipt extends ReceiptComponent {
 	private double cost;
 	
 	
-	public Receipt(){
-		
-		
+	public Receipt(String vehicleType, String vehicleRentalDate, String vehicleReturnDate,
+			int rentalLength, double cost) {
+		super();
+		this.vehicleType = vehicleType;
+		this.vehicleRentalDate = vehicleRentalDate;
+		this.vehicleReturnDate = vehicleReturnDate;
+		this.rentalLength = rentalLength;
+		this.cost = cost;
 	}
+
 	
-	public double getTime() {
-		return time;
-	}
-	public void setTime(double time) {
-		this.time = time;
-	}
-	public String getDate() {
-		return date;
-	}
-	public void setDate(String date) {
-		this.date = date;
-	}
+	
+	
 	public String getVehicleRentalDate() {
 		return vehicleRentalDate;
 	}
@@ -76,8 +70,6 @@ public class Receipt extends ReceiptComponent {
 			    out.println("Car Rental Receipt");
 			    out.println();
 			
-			    out.println("Date of Receipt: " + this.date);
-			    out.println("Time of Receipt: " + this.time);
 			    out.println("Vehicle Type: " + this.vehicleType);
 			    out.println("Vehicle Rental Date: " + this.vehicleRentalDate);
 			    out.println("Vehicle Return Date: " + this.vehicleReturnDate);
