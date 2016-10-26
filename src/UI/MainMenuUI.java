@@ -27,9 +27,10 @@ import Users.*;
 public class MainMenuUI extends JPanel implements ActionListener {
 
 	private static ArrayList<UserTypes> userTypesList = new ArrayList<UserTypes>();
+	private static JFrame frame;
 	
 	public static void main(String[] args) throws InterruptedException {
-		JFrame frame = new JFrame("Main Menu");
+		frame = new JFrame("Main Menu");
 		frame.setSize(500, 300);
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -89,6 +90,18 @@ public class MainMenuUI extends JPanel implements ActionListener {
 		CloseFileCommand closeFileCommand = new CloseFileCommand(fs);
 		aFile = new FileInvoker(closeFileCommand);
 		aFile.execute();
+
+		JFrame frame1 = new JFrame("BrowseVehicles");
+		frame1.setSize(600, 600);
+		frame1.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+
+		frame1.getContentPane().add(new BrowseVehiclesUI());
+		frame1.setVisible(true);
+		frame.setVisible(false);
 		
 	}
 
