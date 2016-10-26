@@ -29,6 +29,6 @@ public class Book implements Booking{
 	}
 	
 	public void printReceipt(){
-		this.receipt = new Receipt();
+		this.receipt = new Receipt(null, null, null, 0, 0);
 	}
 }

@@ -1,6 +1,10 @@
-package DesignPatterns;
+package CommandDP;
 
-public class CustomerUIFileReceiver implements FileSystemReceiver {
+/*
+ * Receiver class - Performs the application specific operation
+ */
+
+public class CustomerUIUserReceiver implements UserReceiver {
 
 	@Override
 	public void openFile() {
