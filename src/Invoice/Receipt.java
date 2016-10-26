@@ -18,7 +18,6 @@ public class Receipt extends ReceiptComponent {
 	private int rentalLength;
 	private double cost;
 	
-	
 	public Receipt(){
 		
 		
