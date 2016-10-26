@@ -25,7 +25,7 @@ import Users.*;
 
 //import Data.DBHandler;
 
-public class MainMenuUI extends JPanel implements ActionListener {
+public class MainMenuUI extends JPanel  {
 
 	private static ArrayList<UserTypes> userTypesList = new ArrayList<UserTypes>();
 	
@@ -79,17 +79,17 @@ public class MainMenuUI extends JPanel implements ActionListener {
 		customerBtn = new JButton("Customer");
 		customerBtn.setBounds(100, 75, 180, 25);
 		add(customerBtn);
-		customerBtn.addActionListener(this);
+		customerBtn.addActionListener(FileSystemReceiverUtil.getSingletonInstance());
 		customerBtn.setActionCommand("customerClicked");
 		
 		employeeBtn = new JButton("Employee");
 		employeeBtn.setBounds(100, 105, 180, 25);
 		add(employeeBtn);
-		employeeBtn.addActionListener(this);
+		employeeBtn.addActionListener(FileSystemReceiverUtil.getSingletonInstance());
 		employeeBtn.setActionCommand("employeeClicked");
 	}
 
-	@Override
+	/*@Override
 	public void actionPerformed(ActionEvent evt) {
 		JFrame frame = new JFrame("MainActivity");
 		frame.setSize(600, 400);
@@ -118,5 +118,5 @@ public class MainMenuUI extends JPanel implements ActionListener {
 
 	public static void setUserTypesList(ArrayList<UserTypes> userTypesList) {
 		MainMenuUI.userTypesList = userTypesList;
-	}
+	}*/
 }

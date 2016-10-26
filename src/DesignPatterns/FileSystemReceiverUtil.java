@@ -9,6 +9,14 @@ import UI.*;
 
 public class FileSystemReceiverUtil implements ActionListener{
 
+	private static FileSystemReceiverUtil singletonInstance;
+	
+	public static FileSystemReceiverUtil getSingletonInstance(){
+		if(singletonInstance == null)
+			singletonInstance = new FileSystemReceiverUtil();
+		return singletonInstance;
+	}
+	
 	public static FileSystemReceiver getGUIUser() {
 		
 		String osName = System.getProperty("os.name");
@@ -39,8 +47,8 @@ public class FileSystemReceiverUtil implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		e.getActionCommand();
-		System.out.println("here"); 
+		
+		System.out.println("here " + e.getActionCommand()); 
 		
 	}
 

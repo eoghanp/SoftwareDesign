@@ -1,5 +1,7 @@
 package Vehicle;
 
+import java.text.SimpleDateFormat;
+
 public class Vehicle
 {
 	private final String model;
@@ -9,7 +11,7 @@ public class Vehicle
 	private boolean available;
 
 	public Vehicle(String model, int seats, String specialFeatures, String classification, boolean available) {
-		super();
+		//super();
 		this.model = model;
 		this.seats = seats;
 		this.specialFeatures = specialFeatures;
@@ -32,6 +34,12 @@ public class Vehicle
 	
 	public String getClassification() {
 		return classification;
+	}
+
+
+	public void setBooked(SimpleDateFormat startDate, SimpleDateFormat endDate) {
+		this.available = false;
+		
 	}
 
 }
