@@ -23,7 +23,6 @@ import DesignPatterns.OpenFileCommand;
 import DesignPatterns.WriteToFileCommand;
 import Users.*;
 
-//import Data.DBHandler;
 
 public class MainMenuUI extends JPanel implements ActionListener {
 
@@ -40,9 +39,6 @@ public class MainMenuUI extends JPanel implements ActionListener {
 
 		frame.getContentPane().add(new MainMenuUI());
 		frame.setVisible(true);
-		
-		
-		
 		
 	}
 
@@ -73,44 +69,26 @@ public class MainMenuUI extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-		/*JFrame frame = new JFrame("MainActivity");
-		frame.setSize(600, 400);
 		
-		String evtAction = "";
-		evtAction = evt.getActionCommand();
-		UserTypes addUser = new UserTypes(evtAction);
-		getUserTypesList().add(addUser);
-		if ("customerClicked".equals(evt.getActionCommand())) {
-			System.out.println("Customer Clicked");
-			
-			System.out.println(getUserTypesList().get(0).getUser());
-			userTypesList.clear();
-		} else {
-			System.out.println("Employee Clicked");
-
-			System.out.println(getUserTypesList().get(0).getUser());
-			userTypesList.clear();
-		}*/
-		
-				// Creating the receiver object
-				FileSystemReceiver fs = FileSystemReceiverUtil.getGUIUser(evt.getActionCommand());
+		// Creating the receiver object
+		FileSystemReceiver fs = FileSystemReceiverUtil.getGUIUser(evt.getActionCommand());
 						
-				// Creating command and associating with receiver
-				OpenFileCommand openFileCommand = new OpenFileCommand(fs);
+		// Creating command and associating with receiver
+		OpenFileCommand openFileCommand = new OpenFileCommand(fs);
 						
-				// Creating invoker and associating with Command
-				FileInvoker aFile = new FileInvoker(openFileCommand);
+		// Creating invoker and associating with Command
+		FileInvoker aFile = new FileInvoker(openFileCommand);
+					
+		// Perform action on Invoker object;
+		aFile.execute();
 						
-				// Perform action on Invoker object;
-				aFile.execute();
+		WriteToFileCommand writeFileCommand = new WriteToFileCommand(fs);
+		aFile = new FileInvoker(writeFileCommand);
+		aFile.execute();
 						
-				WriteToFileCommand writeFileCommand = new WriteToFileCommand(fs);
-				aFile = new FileInvoker(writeFileCommand);
-				aFile.execute();
-						
-				CloseFileCommand closeFileCommand = new CloseFileCommand(fs);
-				aFile = new FileInvoker(closeFileCommand);
-				aFile.execute();
+		CloseFileCommand closeFileCommand = new CloseFileCommand(fs);
+		aFile = new FileInvoker(closeFileCommand);
+		aFile.execute();
 		
 	}
 
