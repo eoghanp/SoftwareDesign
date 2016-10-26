@@ -7,7 +7,7 @@ import javax.swing.JButton;
 
 import UI.*;
 
-public class FileSystemReceiverUtil implements ActionListener{
+public class FileSystemReceiverUtil {
 
 	private static FileSystemReceiverUtil singletonInstance;
 	
@@ -17,15 +17,15 @@ public class FileSystemReceiverUtil implements ActionListener{
 		return singletonInstance;
 	}
 	
-	public static FileSystemReceiver getGUIUser() {
+	public static FileSystemReceiver getGUIUser(String msg) {
 		
 		String osName = System.getProperty("os.name");
 		System.out.println("Underlying OS is:" + osName);
-		if (osName.contains("Windows")) {
-			System.out.println("Mac OS X");
+		if (msg.equals("customerClicked")) {
+			System.out.println("Customer");
 			return new CustomerUIFileReceiver();
 		} else {
-			System.out.println("macOS");
+			System.out.println("Employee");
 			return new EmployeeUIFileReceiver();
 		}
 		
@@ -45,12 +45,6 @@ public class FileSystemReceiverUtil implements ActionListener{
 	}
 	
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		System.out.println("here " + e.getActionCommand()); 
-		
-	}
 
 
 }

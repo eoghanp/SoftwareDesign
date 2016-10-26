@@ -25,7 +25,7 @@ import Users.*;
 
 //import Data.DBHandler;
 
-public class MainMenuUI extends JPanel  {
+public class MainMenuUI extends JPanel implements ActionListener {
 
 	private static ArrayList<UserTypes> userTypesList = new ArrayList<UserTypes>();
 	
@@ -42,25 +42,7 @@ public class MainMenuUI extends JPanel  {
 		frame.setVisible(true);
 		
 		
-		// Creating the receiver object
-		FileSystemReceiver fs = FileSystemReceiverUtil.getGUIUser();
-				
-		// Creating command and associating with receiver
-		OpenFileCommand openFileCommand = new OpenFileCommand(fs);
-				
-		// Creating invoker and associating with Command
-		FileInvoker aFile = new FileInvoker(openFileCommand);
-				
-		// Perform action on Invoker object;
-		aFile.execute();
-				
-		WriteToFileCommand writeFileCommand = new WriteToFileCommand(fs);
-		aFile = new FileInvoker(writeFileCommand);
-		aFile.execute();
-				
-		CloseFileCommand closeFileCommand = new CloseFileCommand(fs);
-		aFile = new FileInvoker(closeFileCommand);
-		aFile.execute();
+		
 		
 	}
 
@@ -79,19 +61,19 @@ public class MainMenuUI extends JPanel  {
 		customerBtn = new JButton("Customer");
 		customerBtn.setBounds(100, 75, 180, 25);
 		add(customerBtn);
-		customerBtn.addActionListener(FileSystemReceiverUtil.getSingletonInstance());
+		customerBtn.addActionListener(this);
 		customerBtn.setActionCommand("customerClicked");
 		
 		employeeBtn = new JButton("Employee");
 		employeeBtn.setBounds(100, 105, 180, 25);
 		add(employeeBtn);
-		employeeBtn.addActionListener(FileSystemReceiverUtil.getSingletonInstance());
+		employeeBtn.addActionListener(this);
 		employeeBtn.setActionCommand("employeeClicked");
 	}
 
-	/*@Override
+	@Override
 	public void actionPerformed(ActionEvent evt) {
-		JFrame frame = new JFrame("MainActivity");
+		/*JFrame frame = new JFrame("MainActivity");
 		frame.setSize(600, 400);
 		
 		String evtAction = "";
@@ -108,7 +90,27 @@ public class MainMenuUI extends JPanel  {
 
 			System.out.println(getUserTypesList().get(0).getUser());
 			userTypesList.clear();
-		}
+		}*/
+		
+				// Creating the receiver object
+				FileSystemReceiver fs = FileSystemReceiverUtil.getGUIUser(evt.getActionCommand());
+						
+				// Creating command and associating with receiver
+				OpenFileCommand openFileCommand = new OpenFileCommand(fs);
+						
+				// Creating invoker and associating with Command
+				FileInvoker aFile = new FileInvoker(openFileCommand);
+						
+				// Perform action on Invoker object;
+				aFile.execute();
+						
+				WriteToFileCommand writeFileCommand = new WriteToFileCommand(fs);
+				aFile = new FileInvoker(writeFileCommand);
+				aFile.execute();
+						
+				CloseFileCommand closeFileCommand = new CloseFileCommand(fs);
+				aFile = new FileInvoker(closeFileCommand);
+				aFile.execute();
 		
 	}
 
@@ -118,5 +120,5 @@ public class MainMenuUI extends JPanel  {
 
 	public static void setUserTypesList(ArrayList<UserTypes> userTypesList) {
 		MainMenuUI.userTypesList = userTypesList;
-	}*/
+	}
 }
