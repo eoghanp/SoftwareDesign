@@ -2,7 +2,11 @@ package Transaction;
 
 import java.text.SimpleDateFormat;
 
+import Invoice.CompanyName;
+import Invoice.CustomerInfo;
 import Invoice.Receipt;
+import Invoice.ReceiptComponent;
+import Invoice.VehicleInfo;
 import Users.Customer;
 import Vehicle.Vehicle;
 
@@ -11,7 +15,6 @@ public class Book implements Booking{
 	private Vehicle vehicle;
 	private SimpleDateFormat startDate;
 	private SimpleDateFormat endDate;
-	private Receipt receipt;
 	
 	public Book() {
 	}
@@ -29,6 +32,11 @@ public class Book implements Booking{
 	}
 	
 	public void printReceipt(){
-		this.receipt = new Receipt();
+		ReceiptComponent myReceipt = new Receipt(null, null, null, 0, 0);
+		myReceipt = new CompanyName(myReceipt);
+		myReceipt = new CustomerInfo(myReceipt);
+		myReceipt = new VehicleInfo(myReceipt);
+		myReceipt = new Invoice.DateFooter(myReceipt);
+		myReceipt.prtReceipt();
 	}
 }
