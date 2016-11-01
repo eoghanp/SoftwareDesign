@@ -11,7 +11,6 @@ public class Vehicle
 	private boolean available;
 
 	public Vehicle(String model, int seats, String specialFeatures, String classification, boolean available) {
-		//super();
 		this.model = model;
 		this.seats = seats;
 		this.specialFeatures = specialFeatures;
@@ -40,6 +39,11 @@ public class Vehicle
 	public void setBooked(SimpleDateFormat startDate, SimpleDateFormat endDate) {
 		this.available = false;
 		
+	}
+
+
+	public boolean getAvailable() {
+		return this.available;
 	}
 
 }
