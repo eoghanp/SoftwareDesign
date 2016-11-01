@@ -22,19 +22,6 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 	List<Vehicle> vehicles;
 	private JTable table;
 	private JScrollPane pane;
-	
-	/*public static void main(String[] args) throws InterruptedException {
-		JFrame frame = new JFrame("Login");
-		frame.setSize(600, 600);
-		frame.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
-
-		frame.getContentPane().add(new BrowseVehiclesUI());
-		frame.setVisible(true);
-	}*/
 
 	public BrowseVehiclesUI() {
 		setLayout(null);
