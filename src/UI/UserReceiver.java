@@ -1,4 +1,4 @@
-package CommandDP;
+package UI;
 
 /*
  * Defines the contract for the implementation classes

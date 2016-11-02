@@ -1,4 +1,4 @@
-package CommandDP;
+package UI;
 
 /*
  * Return appropriate type based on input
