@@ -57,7 +57,7 @@ public class MainMenuUI extends JPanel implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent evt) {
+	public void actionPerformed(ActionEvent evt){
 		
 		/*
 		 * Creates the ConcreteCommans and sets their receivers.
@@ -84,17 +84,39 @@ public class MainMenuUI extends JPanel implements ActionListener {
 		aUser = new UserInvoker(closeFileCommand);
 		aUser.execute();
 
-		JFrame frame1 = new JFrame("BrowseVehicles");
-		frame1.setSize(600, 600);
-		frame1.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
+		if(evt.getActionCommand().equals("customerClicked"))
+		{
+			JFrame frame1 = new JFrame("BrowseVehicles");
+			frame1.setSize(600, 600);
+			frame1.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent e) {
+					System.exit(0);
+				}
+			});
+			
+			frame1.getContentPane().add(new BrowseVehiclesUI());
+			frame1.setVisible(true);
+			frame.setVisible(false);
+		}
+		else if(evt.getActionCommand().equals("employeeClicked"))
+		{
+			JFrame frame1 = new JFrame("Employee UI");
+			frame1.setSize(1150, 500);
+			frame1.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent e) {
+					System.exit(0);
+				}
+			});
+			
+				frame1.getContentPane().add(new EmployeeUI());
+				frame1.setVisible(true);
+				frame.setVisible(false);
+			
+		}
+			
+		
 
-		frame1.getContentPane().add(new BrowseVehiclesUI());
-		frame1.setVisible(true);
-		frame.setVisible(false);
+		
 	}
 
 }
