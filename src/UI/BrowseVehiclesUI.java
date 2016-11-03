@@ -36,7 +36,7 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 		
 		vehicles = new ArrayList<Vehicle>();
 		for(int i = 0; i < 20; i++){
-			this.vehicles.add(new Vehicle("model " + i, i, "a", "a", true));
+			this.vehicles.add(new Vehicle("model " + i, i, "a", "a", true, 0.0));
 		}
 		
 		Criteria criteriaAvailable = new CriteriaAvailable();
