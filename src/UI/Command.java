@@ -1,4 +1,4 @@
-package CommandDP;
+package UI;
 
 /*
  * Declares an interface for invoking an operation

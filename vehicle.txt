@@ -3,3 +3,4 @@ Renault|5|None|Family Car|true|40.0
 Ford GT|2|Its fast|Sports Car|true|200.0
 Nissian Tiida|5|Air Conditioning|Family Car|true|70.0
 Citeron|2|None|Business|false|75.2
+Opel Astra|5|It's purple|Family Car|false|90.75

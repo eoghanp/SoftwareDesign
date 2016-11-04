@@ -1,4 +1,4 @@
-package CommandDP;
+package UI;
 
 /*
  * Receiver class - Performs the application specific operation

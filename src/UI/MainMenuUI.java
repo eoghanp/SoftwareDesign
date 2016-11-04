@@ -15,12 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import CommandDP.CloseFileCommand;
-import CommandDP.UserInvoker;
-import CommandDP.UserReceiver;
-import CommandDP.UserReceiverFP;
-import CommandDP.OpenFileCommand;
-import CommandDP.WriteToFileCommand;
 import Users.*;
 
 

@@ -1,4 +1,4 @@
-package CommandDP;
+package UI;
 
 /*
  * Instructs the Command to carry out the request in response to an event

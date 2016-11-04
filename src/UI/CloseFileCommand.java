@@ -1,4 +1,4 @@
-package CommandDP;
+package UI;
 
 /*
  * Specifies a binding between a Receiver and an action to be carried out.
