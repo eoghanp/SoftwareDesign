@@ -32,6 +32,7 @@ public class EmployeeUI extends JPanel implements ActionListener
 	//Add Vehicle components
 	private JButton addVehicleBtn;
 	private JButton deleteVehicleBtn;
+	private JButton undoDeleteBtn;
 	private JLabel modelName;
 	private JTextField modelNameTxt;
 	private JLabel seatNumber;
@@ -50,8 +51,13 @@ public class EmployeeUI extends JPanel implements ActionListener
 	private JTable vehicleTable;
 	private JScrollPane pane;
 	
+	Caretaker caretaker = new Caretaker();
+	Originator originator = new Originator();
+	int currentVehicle = -1;
 	
-	public EmployeeUI(){
+	public EmployeeUI()
+	{
+		
 		setLayout(null);
 		
 		JLabel addVehicleLbl = new JLabel("<HTML><U>Add a Vehicle</U></HTML>");
@@ -121,18 +127,31 @@ public class EmployeeUI extends JPanel implements ActionListener
 		
 		//CREATE VEHICLE TABLE
 		createTable();
+		pane = new JScrollPane(vehicleTable);
+		pane.setBounds(400, 50, 650, 250);
+	    add(pane);
 		//CREATE DELETE VEHICLE BUTTON
 		deleteVehicleBtn = new JButton("Delete Vehicle");
-		deleteVehicleBtn.setBounds(600, 350, 150, 25);
+		deleteVehicleBtn.setBounds(550, 320, 150, 25);
 		add(deleteVehicleBtn);
 		deleteVehicleBtn.addActionListener(this);
 		deleteVehicleBtn.setActionCommand("deleteVehicle");
+		
+		//CREATE UNDO DELETE VEHICLE BUTTON
+		undoDeleteBtn = new JButton("Undo Delete");
+		undoDeleteBtn.setBounds(750, 320, 150, 25);
+		add(undoDeleteBtn);
+		undoDeleteBtn.addActionListener(this);
+		undoDeleteBtn.setActionCommand("undoDelete");
+		undoDeleteBtn.setEnabled(false);
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) 
 	{
+		if(currentVehicle <= 0)
+			undoDeleteBtn.setEnabled(false);
 		//When 'Add Vehicle' button is clicked
 		if ("addVehicle" == event.getActionCommand())
 		{
@@ -155,7 +174,9 @@ public class EmployeeUI extends JPanel implements ActionListener
 					DBHandler handler = DBHandler.getSingletonInstance();
 					handler.saveVehicle(aVehicle);
 					//Add vehicle to table
+					pane.getViewport().remove(vehicleTable);
 					createTable();
+					pane.getViewport().add(vehicleTable, null);
 					JOptionPane.showMessageDialog(null,"Vehicle Added");
 						
 					clearAddVehicleForm();
@@ -174,22 +195,47 @@ public class EmployeeUI extends JPanel implements ActionListener
 				try {
 					//Gets the value from the Model column of the selected row
 					String selectedItem = (vehicleTable.getModel().getValueAt(row, 0).toString());
+					
+					originator.set(selectedItem);
+					caretaker.addMemento(originator.storeInMemento());
+					currentVehicle++;
+					undoDeleteBtn.setEnabled(true);
+					
 					DBHandler handler = DBHandler.getSingletonInstance();
+					((DefaultTableModel) vehicleTable.getModel()).removeRow(row);
 					//Deletes vehicle containing selected Item
 					handler.deleteVehicle(selectedItem);
 					//Refreshes the table to show existing vehicles
+					pane.getViewport().remove(vehicleTable);
 					createTable();
+					pane.getViewport().add(vehicleTable, null);
 					JOptionPane.showMessageDialog(null,selectedItem + " vehicle deleted");
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 			}
-			
 		}
-		
+		//When undo button is clicked
+		else if("undoDelete" == event.getActionCommand())
+		{
+			try {
+				String recoveredDeletedVehicle = originator.restoreFromMemento(caretaker.getMemento(currentVehicle));
+				//System.out.println("After undo operation: " + recoveredDeletedVehicle);
+				currentVehicle--;
+				DBHandler handler = DBHandler.getSingletonInstance();
+				String recovered = handler.getLastDeletedVehicle(recoveredDeletedVehicle);
+				System.out.println("vehicle recovered from file: " + recovered);
+				pane.getViewport().remove(vehicleTable);
+				createTable();
+				pane.getViewport().add(vehicleTable, null);
+			} 
+			catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	
 	}
 	
 	private void clearAddVehicleForm(){
@@ -201,16 +247,16 @@ public class EmployeeUI extends JPanel implements ActionListener
 	  }
 	
 	
-	public void createTable(){
-		//CREATE TABLE
-		DBHandler db = DBHandler.getSingletonInstance();
-		List<Vehicle> listVehicles;
+	public void createTable()
+	{
 		try {
+			String[] columnNames = { "Model", "Seats", "Special Features", "Classification", "Available", "Price"};
+			DBHandler db = DBHandler.getSingletonInstance();
+			List<Vehicle> listVehicles;
 			listVehicles = db.getListOfVehicles();
-			//List <Vehicle> listVehicles = new ArrayList<Vehicle>();
-			
+			String cellData[][] = new String[listVehicles.size()][6];
+		    
 			//filling cell data array with information about each vehicle -> one vehicle object per row
-			String[][] cellData = new String[listVehicles.size()][6];
 			for(int i = 0; i < listVehicles.size(); i++){
 				cellData[i][0] = "" + listVehicles.get(i).getModel();
 				cellData[i][1] = "" + listVehicles.get(i).getSeats();
@@ -220,8 +266,14 @@ public class EmployeeUI extends JPanel implements ActionListener
 				cellData[i][5] = "" + listVehicles.get(i).getPrice();
 			
 			}
-		    String[] columnNames = { "Model", "Seats", "Special Features", "Classification", "Available", "Price"};
-		    vehicleTable = new JTable(cellData, columnNames);
+			
+			DefaultTableModel model = new DefaultTableModel(cellData, columnNames);
+			vehicleTable = new JTable( model );
+			vehicleTable.setFocusable(true);
+			vehicleTable.setColumnSelectionAllowed(false);
+			vehicleTable.setRowSelectionAllowed(true);
+		    //vehicleTable = new JTable(cellData, columnNames);
+		    System.out.println("The table has " + vehicleTable.getModel().getRowCount() + "rows");
 		    
 		    //Change default width of table columns
 		    TableColumn column = null;
@@ -240,9 +292,6 @@ public class EmployeeUI extends JPanel implements ActionListener
 		        }
 		    }
 		    
-		    pane = new JScrollPane(vehicleTable);
-			pane.setBounds(400, 50, 650, 250);
-		    add(pane);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

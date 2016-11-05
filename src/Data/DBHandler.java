@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class DBHandler
 {
 	private static DBHandler singletonInstance;
 	private File file =new File("vehicle.txt");
+	private File deleteVehFile = new File("deletedVehicles.txt");
 	
 	public static DBHandler getSingletonInstance(){
 		if(singletonInstance == null)
@@ -105,6 +107,10 @@ public class DBHandler
 		FileReader fr = new FileReader(file);
 		BufferedReader reader = new BufferedReader(fr);
 		BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+		
+		
+		//BufferedReader reader = new BufferedReader(new FileReader(deleteFile));
+		//BufferedWriter delWriter = new BufferedWriter(new FileWriter(deleteVehFile));
 		try{
 			String currentLine;
 			while((currentLine = reader.readLine()) != null)
@@ -114,9 +120,14 @@ public class DBHandler
 				if(!trimmedLine.startsWith(lineToRemove)){ //if the trimmed line DOES NOT starts with the lineToRemove
 					writer.write(currentLine + System.getProperty("line.separator")); //Write the line to tempFile
 				}	
+				else if(trimmedLine.startsWith(lineToRemove)){//if the trimmed line DOES start with the lineToRemove
+					//delWriter.write(currentLine + System.getProperty("line.separator")); //Write the line to deleteVehFile
+					saveDeletedVehicle(trimmedLine);
+				}
 			}
 			writer.close();
 			reader.close();
+			//delWriter.close();
 			file.delete(); //Delete old vehicle.txt file
 			tempFile.renameTo(file); //Rename temp file to vehicle.txt
 			
@@ -125,6 +136,63 @@ public class DBHandler
 		   // TODO Auto-generated catch block
 		   e.printStackTrace();
 	   }
+	}
+	
+	public void saveDeletedVehicle(String deletedVehicle) throws IOException
+	{
+		//String data = "";
+		try{ 		
+    		//if file doesn't exists, then create it
+    		if(!deleteVehFile.exists()){
+    			deleteVehFile.createNewFile();
+    		}
+    		
+    		//true = append file
+    		FileWriter fileWriter = new FileWriter(deleteVehFile.getName(),true);
+    	        BufferedWriter bufferWritter = new BufferedWriter(fileWriter);
+    	       // bufferWritter.write(data);
+    	        PrintWriter pw = new PrintWriter(bufferWritter);
+    	        pw.println(deletedVehicle);
+    	        bufferWritter.close();
+    	    
+	        System.out.println(deletedVehicle +" saved to deleteVehicle.txt");
+	        
+    	}catch(IOException e){
+    		e.printStackTrace();
+    	}
+		
+	}
+	
+	public String getLastDeletedVehicle(String deletedVehicle) throws IOException
+	{
+		String currentLine;
+		String lastLine = "";
+		BufferedReader reader = new BufferedReader(new FileReader(deleteVehFile));
+		try{ 		
+			while((currentLine = reader.readLine()) != null)
+			{
+				lastLine = currentLine;
+			}
+			//WRITES THE RECOVERED VEHICLE BACK INTO VEHICLE.TXT FILE
+			FileWriter fileWritter = new FileWriter(file.getName(),true);
+	        BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+	        PrintWriter pw = new PrintWriter(bufferWritter);
+	        pw.println(lastLine);
+	        bufferWritter.close();
+			
+	        //get the length of the last line and take it away from the length of the whole file
+			RandomAccessFile raf = new RandomAccessFile(deleteVehFile, "rw");
+			long length = raf.length();
+			System.out.println("File Length= "+ length);
+			long lastLineLength = (lastLine.length()+1) + (lastLine.length() - lastLine.replace(" ", "").length());
+			raf.setLength(length - lastLineLength);
+            System.out.println("File Length="+raf.length());
+            raf.close();
+			
+    	}catch(IOException e){
+    		e.printStackTrace();
+    	}
+		return lastLine;
 	}
 	
 }
