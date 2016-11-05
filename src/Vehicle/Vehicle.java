@@ -11,7 +11,7 @@ public class Vehicle
 	private boolean available;
 	private double price;
 
-	public Vehicle(String model, int seats, String specialFeatures, String classification, boolean available, double price) {
+	Vehicle(String model, int seats, String specialFeatures, String classification, boolean available, double price) {
 		this.model = model;
 		this.seats = seats;
 		this.specialFeatures = specialFeatures;

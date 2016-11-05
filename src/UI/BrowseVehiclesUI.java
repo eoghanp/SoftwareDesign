@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import Data.DBHandler;
 import Vehicle.AndCriteria;
 import Vehicle.Criteria;
 import Vehicle.CriteriaAvailable;
@@ -34,9 +36,13 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 	public BrowseVehiclesUI() {
 		setLayout(null);
 		
-		vehicles = new ArrayList<Vehicle>();
-		for(int i = 0; i < 20; i++){
-			this.vehicles.add(new Vehicle("model " + i, i, "a", "a", true, 0.0));
+		
+		DBHandler db = DBHandler.getSingletonInstance(); 
+		try {
+			vehicles = db.getListOfVehicles();
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 		Criteria criteriaAvailable = new CriteriaAvailable();
@@ -74,12 +80,17 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 
 	private void populateTable() {
 		
-		String[][] cellData = new String[vehicles.size()][1];;
+		String[][] cellData = new String[vehicles.size()][6];;
 		for(int i = 0; i < vehicles.size(); i++){
 			cellData[i][0] = "" + vehicles.get(i).getModel();
+			cellData[i][1] = "" + vehicles.get(i).getSeats();
+			cellData[i][2] = "" + vehicles.get(i).getSpecialFeatures();
+			cellData[i][3] = "" + vehicles.get(i).getClassification();
+			cellData[i][4] = "" + vehicles.get(i).getAvailable();
+			cellData[i][5] = "" + vehicles.get(i).getPrice();
 		}
 			
-	    String[] columnNames = { "Model"};
+	    String[] columnNames = { "Model", "Seats", "Special Features", "Classification", "Available", "Price"};
 
 	    DefaultTableModel model = new DefaultTableModel(cellData, columnNames);
 	    
@@ -101,7 +112,6 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 			}
 		}
 		else if ("filter" == e.getActionCommand()){
-			System.out.print("DEBUG: " + classificationBox.getSelectedIndex());
 			
 			String classification;
 			if (classificationBox.getSelectedIndex() == 0)

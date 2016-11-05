@@ -23,6 +23,7 @@ import javax.swing.table.TableColumn;
 
 import Data.DBHandler;
 import Vehicle.Vehicle;
+import Vehicle.VehicleBuilder;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -151,7 +152,9 @@ public class EmployeeUI extends JPanel implements ActionListener
 					}
 					else availableBool = true;
 					
-					Vehicle aVehicle = new Vehicle(modelNameTxt.getText(),seatsNumber,featuresTxt.getText(),carClassTxt.getText(), availableBool ,price);
+					VehicleBuilder vb = new VehicleBuilder(modelNameTxt.getText(), price).seats(seatsNumber).specialFeatures(featuresTxt.getText()).classification(carClassTxt.getText()).available(availableBool);
+					Vehicle aVehicle = vb.createVehicle();
+					//Vehicle aVehicle = new Vehicle(modelNameTxt.getText(),seatsNumber,featuresTxt.getText(),carClassTxt.getText(), availableBool ,price);
 					DBHandler handler = DBHandler.getSingletonInstance();
 					handler.saveVehicle(aVehicle);
 					//Add vehicle to table
