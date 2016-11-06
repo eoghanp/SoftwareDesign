@@ -36,17 +36,7 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 	public BrowseVehiclesUI() {
 		setLayout(null);
 		
-		
-		DBHandler db = DBHandler.getSingletonInstance(); 
-		try {
-			vehicles = db.getListOfVehicles();
-		} 
-		catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		Criteria criteriaAvailable = new CriteriaAvailable();
-		vehicles = criteriaAvailable.meetsCriteria(vehicles);
+		getVehicleList();		
 		populateTable();
 		
 		JLabel Vehicleslbl = new JLabel("Available Vehicles");
@@ -54,25 +44,39 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 		add(Vehicleslbl);
 		
 		JButton bookBtn = new JButton("Book Vehicle");
-		bookBtn.setBounds(300, 275, 150, 25);
+		bookBtn.setBounds(50, 350, 150, 25);
 		add(bookBtn);
 		bookBtn.addActionListener(this);
 		bookBtn.setActionCommand("book");
 		
+		JLabel Filterlbl = new JLabel("Filter Available Vehicles");
+		Filterlbl.setBounds(750, 10, 250, 25);
+		add(Filterlbl);
+		
+		JLabel Classlbl = new JLabel("Vehicle Classification");
+		Classlbl.setBounds(750, 60, 250, 25);
+		add(Classlbl);
+		
 		classificationBox = new JComboBox<String>();
-		classificationBox.addItem("class1");
-		classificationBox.addItem("class2");
-		classificationBox.setBounds(300, 50, 150, 25);
+		classificationBox.addItem("Family Car");
+		classificationBox.addItem("Sports Car");
+		classificationBox.addItem("Business");
+		classificationBox.setBounds(750, 90, 150, 25);
 		add(classificationBox);
 		
+		JLabel seatslbl = new JLabel("Number of Seats");
+		seatslbl.setBounds(750, 140, 250, 25);
+		add(seatslbl);
+		
 		seatsBox = new JComboBox<String>();
+		seatsBox.addItem("2 seats");
 		seatsBox.addItem("5 seats");
 		seatsBox.addItem("7 seats");
-		seatsBox.setBounds(300, 100, 150, 25);
+		seatsBox.setBounds(750, 170, 150, 25);
 		add(seatsBox);
 		
 		JButton filterBtn = new JButton("Filter Search");
-		filterBtn.setBounds(300, 150, 150, 25);
+		filterBtn.setBounds(750, 220, 150, 25);
 		add(filterBtn);
 		filterBtn.addActionListener(this);
 		filterBtn.setActionCommand("filter");
@@ -96,7 +100,7 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 	    
 	    table = new JTable(model);
 	    pane = new JScrollPane(table);
-		pane.setBounds(10, 50, 250, 250);
+		pane.setBounds(10, 50, 650, 250);
 	    add(pane);
 	}
 
@@ -113,23 +117,42 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 		}
 		else if ("filter" == e.getActionCommand()){
 			
+			getVehicleList();
+			
 			String classification;
 			if (classificationBox.getSelectedIndex() == 0)
-				classification = "class1";
+				classification = "Family Car";
+			else if (classificationBox.getSelectedIndex() == 1)
+				classification = "Sports Car";
 			else
-				classification = "class2";
+				classification = "Business";
 			
 			int seats;
 			if (seatsBox.getSelectedIndex() == 0)
-				seats = 4;
+				seats = 2;
+			else if (seatsBox.getSelectedIndex() == 1)
+				seats = 5;
 			else
-				seats = 6;
+				seats = 7;
 			
 			Criteria criteria2 = new AndCriteria(new CriteriaClassification(classification), new CriteriaSeats(seats));
 			vehicles = criteria2.meetsCriteria(vehicles);
 			populateTable();
 		}
 		
+	}
+	
+	private List<Vehicle> getVehicleList(){
+		DBHandler db = DBHandler.getSingletonInstance(); 
+		try {
+			vehicles = db.getListOfVehicles();
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Criteria criteriaAvailable = new CriteriaAvailable();
+		return vehicles = criteriaAvailable.meetsCriteria(vehicles);
 	}
 
 }

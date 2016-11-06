@@ -87,7 +87,7 @@ public class MainMenuUI extends JPanel implements ActionListener {
 		if(evt.getActionCommand().equals("customerClicked"))
 		{
 			JFrame frame1 = new JFrame("BrowseVehicles");
-			frame1.setSize(600, 600);
+			frame1.setSize(1000, 600);
 			frame1.addWindowListener(new WindowAdapter() {
 				public void windowClosing(WindowEvent e) {
 					System.exit(0);

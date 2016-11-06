@@ -15,7 +15,7 @@ public class CriteriaSeats implements Criteria {
 		List<Vehicle> newList = new ArrayList<Vehicle>();
 		
 		for (Vehicle v: vehicles)
-			if (v.getSeats() >= seats)
+			if (v.getSeats() == seats)
 				newList.add(v);
 		
 		return newList;
