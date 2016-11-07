@@ -13,7 +13,6 @@ import java.util.List;
 
 
 import Vehicle.Vehicle;
-//import Vehicle.VehicleBuilder;
 
 public class DBHandler 
 {
@@ -86,11 +85,9 @@ public class DBHandler
 				available= Boolean.parseBoolean(tokens[4]);
 				price=Double.parseDouble(tokens[5]);
 				
-				//VehicleBuilder vb = new VehicleBuilder(model, price).seats(seats).specialFeatures(specialFeatures).classification(classification).available(available);
-				//Vehicle aVehicle = vb.createVehicle();
-				//Vehicle aVehicle = new Vehicle(model, seats, specialFeatures, classification, available, price);
+				Vehicle aVehicle = new Vehicle(model, seats, specialFeatures, classification, available, price);
 				//Vehicle aVehicle = new Vehicle("modelName", 6, "None", "Family", true, 60.0);
-				//vehicles.add(aVehicle);			
+				vehicles.add(aVehicle);			
 			}	
 			fr.close();
 			br.close();

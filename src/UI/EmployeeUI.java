@@ -134,37 +134,42 @@ public class EmployeeUI extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent event) 
 	{
+		Vehicle vehicle = new Vehicle();
+		vehicle.insertModel();
 		//When 'Add Vehicle' button is clicked
 		if ("addVehicle" == event.getActionCommand())
 		{
-				//Check if all fields are not empty
-				if ((modelNameTxt.getText().equals("")) || (seatNumberTxt.getText().equals("")) || (featuresTxt.getText().equals("")) || (carClassTxt.getText().equals("")) || (priceTxt.getText().equals("")))
-				{
-					  JOptionPane.showMessageDialog(null, "You must enter details in all text fields", "Enter all data", 2);
+			//Check if all fields are not empty
+			if ((modelNameTxt.getText().equals("")) || (seatNumberTxt.getText().equals("")) || (featuresTxt.getText().equals("")) || (carClassTxt.getText().equals("")) || (priceTxt.getText().equals("")))
+			{
+				  JOptionPane.showMessageDialog(null, "You must enter details in all text fields", "Enter all data", 2);
+			}
+			else //When fields are valid
+			{	
+				int seatsNumber = Integer.parseInt(seatNumberTxt.getText());
+				double price = Double.parseDouble(priceTxt.getText());
+				boolean availableBool;
+				if(String.valueOf(available.getSelectedItem()) == "No"){
+					availableBool = false;
 				}
-				else //When fields are valid
-				{	
-					int seatsNumber = Integer.parseInt(seatNumberTxt.getText());
-					double price = Double.parseDouble(priceTxt.getText());
-					boolean availableBool;
-					if(String.valueOf(available.getSelectedItem()) == "No"){
-						availableBool = false;
-					}
-					else availableBool = true;
+				else availableBool = true;
+				
+				//VehicleBuilder vb = new VehicleBuilder(modelNameTxt.getText(), price).seats(seatsNumber).specialFeatures(featuresTxt.getText()).classification(carClassTxt.getText()).available(availableBool);
+				//Vehicle aVehicle = vb.createVehicle();
+				//Vehicle aVehicle = new Vehicle(modelNameTxt.getText(),seatsNumber,featuresTxt.getText(),carClassTxt.getText(), availableBool ,price);
+				DBHandler handler = DBHandler.getSingletonInstance();
+				//handler.saveVehicle(aVehicle);
+				//Add vehicle to table
+				createTable();
+				
+				vehicle.insertModel();
 					
-					//VehicleBuilder vb = new VehicleBuilder(modelNameTxt.getText(), price).seats(seatsNumber).specialFeatures(featuresTxt.getText()).classification(carClassTxt.getText()).available(availableBool);
-					//Vehicle aVehicle = vb.createVehicle();
-					//Vehicle aVehicle = new Vehicle(modelNameTxt.getText(),seatsNumber,featuresTxt.getText(),carClassTxt.getText(), availableBool ,price);
-					DBHandler handler = DBHandler.getSingletonInstance();
-					//handler.saveVehicle(aVehicle);
-					//Add vehicle to table
-					createTable();
-					JOptionPane.showMessageDialog(null,"Vehicle Added");
+				JOptionPane.showMessageDialog(null,"Vehicle Added");
 						
-					clearAddVehicleForm();
+				clearAddVehicleForm();
 					
-				}
-		  }
+			}
+		}
 		//When Delete Vehicle Button is clicked
 		else if("deleteVehicle" == event.getActionCommand())
 		{
