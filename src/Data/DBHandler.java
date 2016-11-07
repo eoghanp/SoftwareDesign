@@ -184,7 +184,9 @@ public class DBHandler
 			RandomAccessFile raf = new RandomAccessFile(deleteVehFile, "rw");
 			long length = raf.length();
 			System.out.println("File Length= "+ length);
-			long lastLineLength = (lastLine.length()+1) + (lastLine.length() - lastLine.replace(" ", "").length());
+			//long lastLineLength = (lastLine.length()) + (lastLine.length() - lastLine.replace(" ", "").length());
+			long lastLineLength = lastLine.getBytes().length + 2; //for 2 bytes
+			System.out.println("LENGTH OF last line IS : " + lastLineLength);
 			raf.setLength(length - lastLineLength);
             System.out.println("File Length="+raf.length());
             raf.close();

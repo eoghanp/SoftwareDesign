@@ -57,15 +57,16 @@ public class EmployeeUI extends JPanel implements ActionListener
 	
 	public EmployeeUI()
 	{
-		
 		setLayout(null);
-		
+		createAddVehicleGUIs();
+		createDeleteVehicleGUIsAndTable();
+	}
+	
+	public void createAddVehicleGUIs()
+	{
 		JLabel addVehicleLbl = new JLabel("<HTML><U>Add a Vehicle</U></HTML>");
 		addVehicleLbl.setBounds(150, 10, 200, 25);
 		add(addVehicleLbl);
-		JLabel delVehicleLbl = new JLabel("<HTML><U>Remove a Vehicle</U></HTML>");
-		delVehicleLbl.setBounds(670, 10, 200, 25);
-		add(delVehicleLbl);
 		
 		//CREATE MODEL NAME LABEL & TEXT FIELD
 		modelName = new JLabel("Model:");
@@ -82,7 +83,7 @@ public class EmployeeUI extends JPanel implements ActionListener
 		seatNumberTxt = new JTextField(20);
 		seatNumberTxt.setBounds(140, 80, 200, 25);
 		add(seatNumberTxt);
-
+		
 		//CREATE SPECIAL FEATURES LABEL & TEXT FIELD
 		features = new JLabel("Special Features:");
 		features.setBounds(10, 110, 200, 25);
@@ -90,7 +91,7 @@ public class EmployeeUI extends JPanel implements ActionListener
 		featuresTxt = new JTextField(20);
 		featuresTxt.setBounds(140, 110, 200, 50);
 		add(featuresTxt);
-
+		
 		//CREATE CAR CLASS LABEL & TEXT FIELD
 		carClass = new JLabel("Classification:");
 		carClass.setBounds(10, 170, 200, 25);
@@ -98,7 +99,7 @@ public class EmployeeUI extends JPanel implements ActionListener
 		carClassTxt = new JTextField(20);
 		carClassTxt.setBounds(140, 170, 200, 25);
 		add(carClassTxt);
-
+		
 		//CREATE AVAILABLE LABEL, COMBO BOX OPTIONS & COMBO BOX
 		availableLbl = new JLabel("Available:");
 		availableLbl.setBounds(10, 200, 200, 25);
@@ -109,7 +110,7 @@ public class EmployeeUI extends JPanel implements ActionListener
 		}
 		available.setBounds(140, 200, 200, 25);
 		add(available);
-
+		
 		//CREATE PRICE LABEL & TEXT FIELD
 		price = new JLabel("Price:");
 		price.setBounds(10, 230, 200, 25);
@@ -117,13 +118,21 @@ public class EmployeeUI extends JPanel implements ActionListener
 		priceTxt = new JTextField(20);
 		priceTxt.setBounds(140, 230, 200, 25);
 		add(priceTxt);
-
+		
 		//CREATE ADD VEHICLE BUTTON & ACTION LISTENER
 		addVehicleBtn = new JButton("Add Vehicle");
 		addVehicleBtn.setBounds(150, 270, 150, 25);
 		add(addVehicleBtn);
 		addVehicleBtn.addActionListener(this);
 		addVehicleBtn.setActionCommand("addVehicle");
+		
+	}
+	
+	public void createDeleteVehicleGUIsAndTable()
+	{
+		JLabel delVehicleLbl = new JLabel("<HTML><U>Remove a Vehicle</U></HTML>");
+		delVehicleLbl.setBounds(670, 10, 200, 25);
+		add(delVehicleLbl);
 		
 		//CREATE VEHICLE TABLE
 		createTable();
@@ -136,7 +145,6 @@ public class EmployeeUI extends JPanel implements ActionListener
 		add(deleteVehicleBtn);
 		deleteVehicleBtn.addActionListener(this);
 		deleteVehicleBtn.setActionCommand("deleteVehicle");
-		
 		//CREATE UNDO DELETE VEHICLE BUTTON
 		undoDeleteBtn = new JButton("Undo Delete");
 		undoDeleteBtn.setBounds(750, 320, 150, 25);
@@ -144,7 +152,6 @@ public class EmployeeUI extends JPanel implements ActionListener
 		undoDeleteBtn.addActionListener(this);
 		undoDeleteBtn.setActionCommand("undoDelete");
 		undoDeleteBtn.setEnabled(false);
-		
 	}
 
 	@Override
@@ -173,10 +180,8 @@ public class EmployeeUI extends JPanel implements ActionListener
 					Vehicle aVehicle = new Vehicle(modelNameTxt.getText(),seatsNumber,featuresTxt.getText(),carClassTxt.getText(), availableBool ,price);
 					DBHandler handler = DBHandler.getSingletonInstance();
 					handler.saveVehicle(aVehicle);
-					//Add vehicle to table
-					pane.getViewport().remove(vehicleTable);
-					createTable();
-					pane.getViewport().add(vehicleTable, null);
+					//Refreshes table to show new vehicle
+					refreshTable();
 					JOptionPane.showMessageDialog(null,"Vehicle Added");
 						
 					clearAddVehicleForm();
@@ -206,9 +211,7 @@ public class EmployeeUI extends JPanel implements ActionListener
 					//Deletes vehicle containing selected Item
 					handler.deleteVehicle(selectedItem);
 					//Refreshes the table to show existing vehicles
-					pane.getViewport().remove(vehicleTable);
-					createTable();
-					pane.getViewport().add(vehicleTable, null);
+					refreshTable();
 					JOptionPane.showMessageDialog(null,selectedItem + " vehicle deleted");
 					
 				} catch (IOException e) {
@@ -227,9 +230,7 @@ public class EmployeeUI extends JPanel implements ActionListener
 				DBHandler handler = DBHandler.getSingletonInstance();
 				String recovered = handler.getLastDeletedVehicle(recoveredDeletedVehicle);
 				System.out.println("vehicle recovered from file: " + recovered);
-				pane.getViewport().remove(vehicleTable);
-				createTable();
-				pane.getViewport().add(vehicleTable, null);
+				refreshTable();
 			} 
 			catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -297,6 +298,13 @@ public class EmployeeUI extends JPanel implements ActionListener
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void refreshTable()
+	{
+		pane.getViewport().remove(vehicleTable);
+		createTable();
+		pane.getViewport().add(vehicleTable, null);
 	}
 
 }
