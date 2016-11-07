@@ -9,14 +9,15 @@ public class Vehicle
 	private final String specialFeatures;
 	private final String classification;
 	private boolean available;
+	private double price;
 
-	public Vehicle(String model, int seats, String specialFeatures, String classification, boolean available) {
-		//super();
+	Vehicle(String model, int seats, String specialFeatures, String classification, boolean available, double price) {
 		this.model = model;
 		this.seats = seats;
 		this.specialFeatures = specialFeatures;
 		this.classification = classification;
 		this.available = available;
+		this.price = price;
 	}
 
 	
@@ -35,11 +36,20 @@ public class Vehicle
 	public String getClassification() {
 		return classification;
 	}
+	
+	public double getPrice() {
+		return price;
+	}
 
 
 	public void setBooked(SimpleDateFormat startDate, SimpleDateFormat endDate) {
 		this.available = false;
 		
+	}
+
+
+	public boolean getAvailable() {
+		return this.available;
 	}
 
 }

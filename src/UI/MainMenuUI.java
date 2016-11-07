@@ -15,22 +15,15 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import DesignPatterns.CloseFileCommand;
-import DesignPatterns.FileInvoker;
-import DesignPatterns.FileSystemReceiver;
-import DesignPatterns.FileSystemReceiverUtil;
-import DesignPatterns.OpenFileCommand;
-import DesignPatterns.WriteToFileCommand;
 import Users.*;
 
-//import Data.DBHandler;
 
 public class MainMenuUI extends JPanel implements ActionListener {
 
-	private static ArrayList<UserTypes> userTypesList = new ArrayList<UserTypes>();
+	private static JFrame frame;
 	
 	public static void main(String[] args) throws InterruptedException {
-		JFrame frame = new JFrame("Main Menu");
+		frame = new JFrame("Main Menu");
 		frame.setSize(500, 300);
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -41,19 +34,11 @@ public class MainMenuUI extends JPanel implements ActionListener {
 		frame.getContentPane().add(new MainMenuUI());
 		frame.setVisible(true);
 		
-		
-		
-		
 	}
 
 	private JButton customerBtn;
 	private JButton employeeBtn;
-	private JTextField userNameTxt;
-	private JTextField IDTxt;
-	private JPasswordField passwordPwd;
-	private JButton logInBtn;
-	private JButton registerBtn;
-	private JButton trackBtn;
+	
 
 	public MainMenuUI() {
 		setLayout(null);
@@ -72,35 +57,62 @@ public class MainMenuUI extends JPanel implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent evt) {
-
+	public void actionPerformed(ActionEvent evt){
+		
+		/*
+		 * Creates the ConcreteCommans and sets their receivers.
+		 * And Registers command with invoker
+		 */
+		
 		// Creating the receiver object
-		FileSystemReceiver fs = FileSystemReceiverUtil.getGUIUser(evt.getActionCommand());
+		UserReceiver ur = UserReceiverFP.getGUIUser(evt.getActionCommand());
 						
 		// Creating command and associating with receiver
-		OpenFileCommand openFileCommand = new OpenFileCommand(fs);
+		OpenFileCommand openFileCommand = new OpenFileCommand(ur);
 						
 		// Creating invoker and associating with Command
-		FileInvoker aFile = new FileInvoker(openFileCommand);
-						
+		UserInvoker aUser = new UserInvoker(openFileCommand);
+					
 		// Perform action on Invoker object;
-		aFile.execute();
+		aUser.execute();
 						
-		WriteToFileCommand writeFileCommand = new WriteToFileCommand(fs);
-		aFile = new FileInvoker(writeFileCommand);
-		aFile.execute();
+		WriteToFileCommand writeFileCommand = new WriteToFileCommand(ur);
+		aUser = new UserInvoker(writeFileCommand);
+		aUser.execute();
 						
-		CloseFileCommand closeFileCommand = new CloseFileCommand(fs);
-		aFile = new FileInvoker(closeFileCommand);
-		aFile.execute();
-		
+		CloseFileCommand closeFileCommand = new CloseFileCommand(ur);
+		aUser = new UserInvoker(closeFileCommand);
+		aUser.execute();
+
+		if(evt.getActionCommand().equals("customerClicked"))
+		{
+			JFrame frame1 = new JFrame("BrowseVehicles");
+			frame1.setSize(1000, 600);
+			frame1.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent e) {
+					System.exit(0);
+				}
+			});
+			
+			frame1.getContentPane().add(new BrowseVehiclesUI());
+			frame1.setVisible(true);
+			frame.setVisible(false);
+		}
+		else if(evt.getActionCommand().equals("employeeClicked"))
+		{
+			JFrame frame1 = new JFrame("Employee UI");
+			frame1.setSize(1150, 500);
+			frame1.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent e) {
+					System.exit(0);
+				}
+			});
+			
+				frame1.getContentPane().add(new EmployeeUI());
+				frame1.setVisible(true);
+				frame.setVisible(false);
+			
+		}
 	}
 
-	public static ArrayList<UserTypes> getUserTypesList() {
-		return userTypesList;
-	}
-
-	public static void setUserTypesList(ArrayList<UserTypes> userTypesList) {
-		MainMenuUI.userTypesList = userTypesList;
-	}
 }

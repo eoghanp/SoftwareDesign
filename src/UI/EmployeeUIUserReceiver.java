@@ -1,6 +1,10 @@
-package DesignPatterns;
+package UI;
 
-public class EmployeeUIFileReceiver implements FileSystemReceiver {
+/*
+ * Receiver class - Performs the application specific operation
+ */
+
+public class EmployeeUIUserReceiver implements UserReceiver {
 
 	@Override
 	public void openFile() {
