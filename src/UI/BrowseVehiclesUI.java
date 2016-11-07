@@ -19,6 +19,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Data.DBHandler;
+import Interceptor.Application;
+import Interceptor.ConcreteInterceptor;
+import Interceptor.Dispatcher;
+import Interceptor.Interceptor;
+import Transaction.BookVehicle;
+import Transaction.Booking;
+import Transaction.Subject;
 import Vehicle.AndCriteria;
 import Vehicle.Criteria;
 import Vehicle.CriteriaAvailable;
@@ -32,9 +39,18 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 	private JScrollPane pane;
 	private JComboBox<String> classificationBox;
 	private JComboBox<String> seatsBox;
+	private Application app;
+	private Dispatcher d;
+	private Interceptor i;
 
 	public BrowseVehiclesUI() {
 		setLayout(null);
+		
+		app = new Application();
+		app.attachInterceptor();
+		//d = new Dispatcher();
+		//i = new ConcreteInterceptor();
+		//d.addInterceptor(i);
 		
 		getVehicleList();		
 		populateTable();
@@ -106,14 +122,23 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if ("book" == e.getActionCommand()){
+		if ("book" == e.getActionCommand())
+		{
 			int a = table.getSelectedRow();
 			if (a >= 0){
 				Vehicle v = vehicles.get(a);
 				v.setBooked(null, null);
 				((DefaultTableModel)table.getModel()).removeRow(a);
+				
+				Subject bv = new Booking(null, v, null, null);
+				bv.registerObserver(app.cf.d);
+				BookVehicle b = (BookVehicle) bv;
+				b.bookVehicle();
+				
 				JOptionPane.showMessageDialog(null, v.getModel() + " booked");
+				b.printReceipt();
 			}
+			
 		}
 		else if ("filter" == e.getActionCommand()){
 			
