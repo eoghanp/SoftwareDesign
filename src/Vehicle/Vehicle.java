@@ -4,13 +4,48 @@ import java.text.SimpleDateFormat;
 
 public class Vehicle
 {
-	private final String model;
-	private final int seats;
-	private final String specialFeatures;
-	private final String classification;
+	private String model;
+	private int seats;
+	private String specialFeatures;
+	private String classification;
 	private boolean available;
 	private double price;
+	
+	public VehicleState hasAvailability;
+	public VehicleState noAvailability;
+	public VehicleState vehicleState;
 
+	public Vehicle() {
+		
+		hasAvailability = new HasAvailability(this);
+		noAvailability = new NoAvailability(this);
+		
+		vehicleState = hasAvailability;
+		//vehicleState = noAvailability;
+		
+	}
+	
+	public void setVehicleState(VehicleState newVehicleState) {
+		vehicleState = newVehicleState;
+	}
+	
+	public void insertModel() {
+		vehicleState.insertModel();
+	}
+	
+	public void deleteModel() {
+		vehicleState.deleteModel();
+	}
+	
+	public VehicleState getHasVehicleState() {
+		return hasAvailability;
+	}
+	
+	public VehicleState getNoVehicleState() {
+		return noAvailability;
+	}
+	
+	
 	public Vehicle(String model, int seats, String specialFeatures, String classification, boolean available, double price) {
 		this.model = model;
 		this.seats = seats;
@@ -51,5 +86,5 @@ public class Vehicle
 	public boolean getAvailable() {
 		return this.available;
 	}
-
+	
 }

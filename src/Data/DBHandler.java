@@ -138,6 +138,9 @@ public class DBHandler
 	   }
 	}
 	
+
+
+
 	public void saveDeletedVehicle(String deletedVehicle) throws IOException
 	{
 		//String data = "";
@@ -198,18 +201,4 @@ public class DBHandler
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

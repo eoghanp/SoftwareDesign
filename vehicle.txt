@@ -1,7 +1,9 @@
+Renault|5|None|Family Car|true|40.0
+Volkswagon Golf|5|Bluetooth|Sports|true|90.0
+Ford Focus|5|Air Conditioning|Family Car|true|70.0
 Citreon|3|Spair tyre|Sports|true|30.0
 Aston Martin|5|None|Super car|true|220.0
-Renault|5|None|Family Car|true|40.0
 Buick|2|Fast|Sports|true|150.0
-Ford Focus|5|Air Conditioning|Family Car|true|70.0
+Audi|5|Neon lights|Sports|true|160.0
 Mazda|5|Compact|Family Car|true|100.0
 Jaguar|5|Fast|Supercar|true|120.0
