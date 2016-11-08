@@ -9,4 +9,8 @@ public class ConcreteFramework
 		d = new Dispatcher();
 		
 	}
+	
+	public Dispatcher getDispatcher(){
+		return this.d;
+	}
 }
