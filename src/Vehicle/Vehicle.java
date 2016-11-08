@@ -11,6 +11,14 @@ public class Vehicle
 	private boolean available;
 	private double price;
 	
+	
+	/* State Context for State DP */
+	
+	/*
+	 * State Context is the class that has a State reference to one of the Concrete implementations of the State.
+	 * Context forwards the request to the State object for processing.
+	 */
+	
 	public VehicleState hasAvailability;
 	public VehicleState noAvailability;
 	public VehicleState vehicleState;
@@ -21,7 +29,6 @@ public class Vehicle
 		noAvailability = new NoAvailability(this);
 		
 		vehicleState = hasAvailability;
-		//vehicleState = noAvailability;
 		
 	}
 	
@@ -29,14 +36,14 @@ public class Vehicle
 		vehicleState = newVehicleState;
 	}
 	
-	public void insertModel() {
-		vehicleState.insertModel();
+	public void checkAvailability() {
+		vehicleState.checkAvailability();
 	}
-	
+	/*
 	public void deleteModel() {
 		vehicleState.deleteModel();
 	}
-	
+	*/
 	public VehicleState getHasVehicleState() {
 		return hasAvailability;
 	}
@@ -44,7 +51,7 @@ public class Vehicle
 	public VehicleState getNoVehicleState() {
 		return noAvailability;
 	}
-	
+
 	
 	public Vehicle(String model, int seats, String specialFeatures, String classification, boolean available, double price) {
 		this.model = model;
@@ -55,7 +62,12 @@ public class Vehicle
 		this.price = price;
 	}
 
-	
+	// Unit Test
+	public Vehicle(Object object, Object object2, Object object3,
+			Object object4, boolean available, Object object5) {
+		this.available = available;
+	}
+
 	public String getModel() {
 		return model;
 	}
@@ -76,15 +88,12 @@ public class Vehicle
 		return price;
 	}
 
-
 	public void setBooked(SimpleDateFormat startDate, SimpleDateFormat endDate) {
 		this.available = false;
 		
 	}
 
-
 	public boolean getAvailable() {
 		return this.available;
 	}
-	
 }

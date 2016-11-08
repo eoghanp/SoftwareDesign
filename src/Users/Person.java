@@ -1,12 +1,17 @@
 package Users;
 
-public class Person{
+public class Person {
+	
 	protected String FirstName;
 	protected String LastName;
 	protected String email;
 	protected String password;
 	protected String address; 
 	protected String telephone;
+	
+	public Person() {
+
+    }
 	
 	public Person(String first, String last, String mail, String pass, String add, String phone){
 		FirstName = first;
@@ -38,12 +43,10 @@ public class Person{
 	public String getPassword(){
 		return password;
 	}
-	
 
 	public void setFirstName(String fname){
 		FirstName = fname;
 	}
-	
 
 	public void setLastName(String lname){
 		LastName = lname;
@@ -56,12 +59,10 @@ public class Person{
 	public void setPassword(String newPassword){
 		password = newPassword;
 	}
-	
 
 	public void setTelephone(String newTelephone){
 		telephone = newTelephone;
 	}
-	
 
 	public void setAddress(String newAddress){
 		address = newAddress;

@@ -4,11 +4,17 @@ import java.io.IOException;
 
 import Data.DBHandler;
 
-//Context object that will change its behavior based on its internal state
+/*
+ * Context object that will change its behaviuor based on its internal state.
+ * 
+ * Concrete State class
+ * Implements a behaviour associated with a state of Context
+ */
 
 public class NoAvailability implements VehicleState {
 
 	Vehicle vehicle;
+	
 	
 	public NoAvailability(Vehicle newVehicle) {
 		
@@ -17,29 +23,10 @@ public class NoAvailability implements VehicleState {
 	}
 
 	@Override
-	public void insertModel() {
+	public void checkAvailability() {
 		
-		try {
-			DBHandler handler = DBHandler.getSingletonInstance();
-			if (handler.getListOfVehicles().isEmpty()) 
-				vehicle.setVehicleState(vehicle.getNoVehicleState());
-				System.out.println("Vehicle DB is empty");
-				
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.println("No vehicles entered to insert");
-		
+		vehicle.setVehicleState(vehicle.getNoVehicleState());
+		System.out.println("Vehicle DB is empty - Nothing to delete!");
 		
 	}
-
-	@Override
-	public void deleteModel() {
-		
-		System.out.println("No vehicles available to delete");
-		
-	}
-
 }

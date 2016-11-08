@@ -158,9 +158,13 @@ public class EmployeeUI extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent event) 
 	{
-
+		/* Client for State DP */
+		
+		// Create a Vehicle object for State DP 
 		Vehicle vehicle = new Vehicle();
-		vehicle.insertModel();
+		
+		// Calls checkAvailability in Vehicle Class, Vehicle class determines (Calls VehicleState) the correct state to execute.
+		vehicle.checkAvailability();
 
 		if(currentVehicle <= 0)
 			undoDeleteBtn.setEnabled(false);
@@ -169,7 +173,8 @@ public class EmployeeUI extends JPanel implements ActionListener
 		if ("addVehicle" == event.getActionCommand())
 		{
 			//Check if all fields are not empty
-			if ((modelNameTxt.getText().equals("")) || (seatNumberTxt.getText().equals("")) || (featuresTxt.getText().equals("")) || (carClassTxt.getText().equals("")) || (priceTxt.getText().equals("")))
+			if ((modelNameTxt.getText().equals("")) || (seatNumberTxt.getText().equals("")) || (featuresTxt.getText().equals("")) ||
+					(carClassTxt.getText().equals("")) || (priceTxt.getText().equals("")))
 			{
 				  JOptionPane.showMessageDialog(null, "You must enter details in all text fields", "Enter all data", 2);
 			}
@@ -183,60 +188,91 @@ public class EmployeeUI extends JPanel implements ActionListener
 				}
 				else availableBool = true;
 				
-				VehicleBuilder vb = new VehicleBuilder(modelNameTxt.getText(), price).seats(seatsNumber).specialFeatures(featuresTxt.getText()).classification(carClassTxt.getText()).available(availableBool);
+				VehicleBuilder vb = new VehicleBuilder(modelNameTxt.getText(), price).seats(seatsNumber).specialFeatures(
+						featuresTxt.getText()).classification(carClassTxt.getText()).available(availableBool);
 				Vehicle aVehicle = vb.createVehicle();
-				//Vehicle aVehicle = new Vehicle(modelNameTxt.getText(),seatsNumber,featuresTxt.getText(),carClassTxt.getText(), availableBool ,price);
+				//Vehicle aVehicle = new Vehicle(modelNameTxt.getText(),seatsNumber,featuresTxt.getText(),
+				//carClassTxt.getText(), availableBool ,price);
 				//DBHandler handler = DBHandler.getSingletonInstance();
 				//handler.saveVehicle(aVehicle);
 				//Add vehicle to table
-				createTable();
-				
-				vehicle.insertModel();
-					
-				JOptionPane.showMessageDialog(null,"Vehicle Added");
+				createTable();				
 
-					//Vehicle aVehicle = new Vehicle(modelNameTxt.getText(),seatsNumber,featuresTxt.getText(),carClassTxt.getText(), availableBool ,price);
+					//Vehicle aVehicle = new Vehicle(modelNameTxt.getText(),seatsNumber,featuresTxt.getText(),
+					//carClassTxt.getText(), availableBool ,price);
 					DBHandler handler = DBHandler.getSingletonInstance();
 					handler.saveVehicle(aVehicle);
 					//Refreshes table to show new vehicle
 					refreshTable();
+					
+					DBHandler handler2 = DBHandler.getSingletonInstance();
+					try {
+						if (!(handler2.getListOfVehicles().isEmpty())) {
+							vehicle.setVehicleState(vehicle.getHasVehicleState());
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					// State DP
+					// Calls checkAvailability in Vehicle Class, Vehicle class determines (Calls VehicleState) the correct state to execute.
+					vehicle.checkAvailability();
+					
 					JOptionPane.showMessageDialog(null,"Vehicle Added");
-
 						
 				clearAddVehicleForm();
 					
 			}
 		}
+		
 		//When Delete Vehicle Button is clicked
 		else if("deleteVehicle" == event.getActionCommand())
 		{
+			
+			// State DP
+			// Calls checkAvailability in Vehicle Class, Vehicle class determines (Calls VehicleState) the correct state to execute.
+			vehicle.checkAvailability();
+			
 			int row = vehicleTable.getSelectedRow();
 			if(row == -1){
 				JOptionPane.showMessageDialog(null,"Please select a vehicle to delete", "Select a Row", 2);
 			}	
 			else
 			{
+				// State DP
+				// Calls checkAvailability in Vehicle Class, Vehicle class determines (Calls VehicleState) the correct state to execute.
+				vehicle.checkAvailability();
 				try {
 					//Gets the value from the Model column of the selected row
 					String selectedItem = (vehicleTable.getModel().getValueAt(row, 0).toString());
-					
+
 					originator.set(selectedItem);
 					caretaker.addMemento(originator.storeInMemento());
 					currentVehicle++;
 					undoDeleteBtn.setEnabled(true);
-					
+
 					DBHandler handler = DBHandler.getSingletonInstance();
 					((DefaultTableModel) vehicleTable.getModel()).removeRow(row);
 					//Deletes vehicle containing selected Item
 					handler.deleteVehicle(selectedItem);
 					//Refreshes the table to show existing vehicles
 					refreshTable();
+
+					
+					
+
 					JOptionPane.showMessageDialog(null,selectedItem + " vehicle deleted");
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				// State DP
+				// Calls checkAvailability in Vehicle Class, Vehicle class determines (Calls VehicleState) the correct state to execute.
+				vehicle.checkAvailability();
+				
 			}
 		}
 		//When undo button is clicked
