@@ -5,9 +5,13 @@ import java.util.List;
 
 public class Dispatcher implements Observer 
 {
+	private List<Interceptor> listOfInterceptors;
 	
-	private List<Interceptor> listOfInterceptors = new ArrayList<Interceptor>();
-	
+	public Dispatcher() {
+		super();
+		listOfInterceptors = new ArrayList<Interceptor>();
+	}
+
 	public void addInterceptor( Interceptor i)
 	{
 		listOfInterceptors.add(i);
