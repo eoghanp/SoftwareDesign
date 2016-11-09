@@ -84,6 +84,3 @@ public class Receipt extends ReceiptComponent {
 
 }
 }
-
-
-

@@ -33,16 +33,3 @@ public class DateFooter extends ReceiptDecorator{
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

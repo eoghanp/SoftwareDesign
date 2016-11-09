@@ -1,0 +1,70 @@
+Car Rental Receipt
+
+Vehicle Type: null
+Vehicle Rental Date: null
+Vehicle Return Date: null
+Length of Rental: 0
+Total Cost of Rental: 0.0
+Name:
+DOB:
+Address:
+Vehicle Type:
+Engine size:
+Year:
+2016/11/07 16:09:56
+Car Rental Receipt
+
+Vehicle Type: null
+Vehicle Rental Date: null
+Vehicle Return Date: null
+Length of Rental: 0
+Total Cost of Rental: 0.0
+Name:
+DOB:
+Address:
+Vehicle Type:
+Engine size:
+Year:
+2016/11/08 16:01:13
+Car Rental Receipt
+
+Vehicle Type: null
+Vehicle Rental Date: null
+Vehicle Return Date: null
+Length of Rental: 0
+Total Cost of Rental: 0.0
+Name:
+DOB:
+Address:
+Vehicle Type:
+Engine size:
+Year:
+2016/11/08 17:04:47
+Car Rental Receipt
+
+Vehicle Type: null
+Vehicle Rental Date: null
+Vehicle Return Date: null
+Length of Rental: 0
+Total Cost of Rental: 0.0
+Name:
+DOB:
+Address:
+Vehicle Type:
+Engine size:
+Year:
+2016/11/08 17:04:52
+Car Rental Receipt
+
+Vehicle Type: null
+Vehicle Rental Date: null
+Vehicle Return Date: null
+Length of Rental: 0
+Total Cost of Rental: 0.0
+Name:
+DOB:
+Address:
+Vehicle Type:
+Engine size:
+Year:
+2016/11/08 17:04:55
