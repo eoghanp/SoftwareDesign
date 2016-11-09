@@ -6,4 +6,4 @@ Aston Martin|5|None|Super car|true|220.0
 Buick|2|Fast|Sports|true|150.0
 Audi|5|Neon lights|Sports|true|160.0
 Mazda|5|Compact|Family Car|true|100.0
-Jaguar|5|Fast|Supercar|true|120.0
+
