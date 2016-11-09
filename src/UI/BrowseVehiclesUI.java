@@ -91,11 +91,16 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 		add(filterBtn);
 		filterBtn.addActionListener(this);
 		filterBtn.setActionCommand("filter");
+		
+		JButton resetBtn = new JButton("Reset table");
+		resetBtn.setBounds(750, 300, 120, 25);
+		add(resetBtn);
+		resetBtn.addActionListener(this);
+		resetBtn.setActionCommand("reset");
 	}
 
 	private void populateTable() {
-		
-		String[][] cellData = new String[vehicles.size()][5];;
+		String[][] cellData = new String[vehicles.size()][5];
 		for(int i = 0; i < vehicles.size(); i++){
 			cellData[i][0] = "" + vehicles.get(i).getModel();
 			cellData[i][1] = "" + vehicles.get(i).getSeats();
@@ -120,6 +125,16 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 		{
 			int a = table.getSelectedRow();
 			if (a >= 0){
+				//Get the selected model that has been booked
+				String bookedModel = (table.getModel().getValueAt(a, 0).toString());
+				String specialFeaturesBookedModel = (table.getModel().getValueAt(a, 2).toString());
+				DBHandler handler = new DBHandler();
+				try {
+					handler.changeVehicleAvailability(bookedModel, specialFeaturesBookedModel, false);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				Vehicle v = vehicles.get(a);
 				((DefaultTableModel)table.getModel()).removeRow(a);
 				vehicles.remove(a);
@@ -165,12 +180,16 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 			populateTable();
 		}
 		
+		else if ("reset" == e.getActionCommand()){
+			refreshBrowseVehiclesTable();
+		}
+		
 	}
 	
 	private List<Vehicle> getVehicleList(){
 		DBHandler db = DBHandler.getSingletonInstance(); 
 		try {
-			vehicles = db.getListOfVehicles();
+			vehicles = db.getListOfAvailableVehicles();
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
@@ -179,5 +198,14 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 		Criteria criteriaAvailable = new CriteriaAvailable();
 		return vehicles = criteriaAvailable.meetsCriteria(vehicles);
 	}
+	
+	public void refreshBrowseVehiclesTable()
+	{
+		pane.getViewport().remove(table);
+		getVehicleList();	
+		populateTable();
+		pane.getViewport().add(table, null);
+	}
+	
 
 }

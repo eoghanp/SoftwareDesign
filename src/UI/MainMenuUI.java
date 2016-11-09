@@ -24,7 +24,7 @@ public class MainMenuUI extends JPanel implements ActionListener {
 	private static JFrame frame;
 	
 	public static void main(String[] args) throws InterruptedException {
-		frame = new JFrame("Main Menu");
+		frame = new JFrame("Vehicle Rental Framework: Select a User");
 		frame.setSize(500, 300);
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -44,6 +44,10 @@ public class MainMenuUI extends JPanel implements ActionListener {
 	public MainMenuUI() {
 		setLayout(null);
 
+		JLabel Vehicleslbl = new JLabel("<HTML><U>Vehicle Rental Framework - Log in</U></HTML>");
+		Vehicleslbl.setBounds(100, 40, 250, 25);
+		add(Vehicleslbl);
+		
 		customerBtn = new JButton("Customer");
 		customerBtn.setBounds(100, 75, 180, 25);
 		add(customerBtn);
@@ -90,33 +94,31 @@ public class MainMenuUI extends JPanel implements ActionListener {
 			JFrame frame1 = new JFrame("BrowseVehicles");
 			frame1.setSize(1000, 500);
 			frame1.addWindowListener(new WindowAdapter() {
-				public void windowClosing(WindowEvent e) {
-					System.exit(0);
-				}
+				//public void windowClosing(WindowEvent e) {
+				//	System.exit(0);
+				//}
 			});
 			
 			frame1.getContentPane().add(new BrowseVehiclesUI());
+			frame.setVisible(true);
 			frame1.setVisible(true);
-			frame.setVisible(false);
+			
 		}
 		else if(evt.getActionCommand().equals("employeeClicked"))
 		{
 			JFrame frame1 = new JFrame("Employee UI");
-			frame1.setSize(1150, 500);
+			frame1.setSize(1150, 650);
 			frame1.addWindowListener(new WindowAdapter() {
-				public void windowClosing(WindowEvent e) {
-					System.exit(0);
-				}
+				//public void windowClosing(WindowEvent e) {
+				//	System.exit(0);
+				//}
 			});
 			
 				frame1.getContentPane().add(new EmployeeUI());
+				frame.setVisible(true);
 				frame1.setVisible(true);
-				frame.setVisible(false);
 			
 		}
-			
-		
-
 		
 	}
 

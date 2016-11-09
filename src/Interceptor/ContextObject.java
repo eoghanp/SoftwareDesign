@@ -15,7 +15,7 @@ public class ContextObject implements ContextObjectInterface{
 	public String getInfo() 
 	{
 		String something = aVehicle.getModel();
-		return something + " is booked.";
+		return "INTERCEPTOR LOG:  " + something + " is booked.";
 	}
 
 }
