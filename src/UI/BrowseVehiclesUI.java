@@ -40,17 +40,12 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 	private JComboBox<String> classificationBox;
 	private JComboBox<String> seatsBox;
 	private Application app;
-	private Dispatcher d;
-	private Interceptor i;
 
 	public BrowseVehiclesUI() {
 		setLayout(null);
 		
 		app = new Application();
 		app.attachInterceptor();
-		//d = new Dispatcher();
-		//i = new ConcreteInterceptor();
-		//d.addInterceptor(i);
 		
 		getVehicleList();		
 		populateTable();
@@ -100,17 +95,16 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 
 	private void populateTable() {
 		
-		String[][] cellData = new String[vehicles.size()][6];;
+		String[][] cellData = new String[vehicles.size()][5];;
 		for(int i = 0; i < vehicles.size(); i++){
 			cellData[i][0] = "" + vehicles.get(i).getModel();
 			cellData[i][1] = "" + vehicles.get(i).getSeats();
 			cellData[i][2] = "" + vehicles.get(i).getSpecialFeatures();
 			cellData[i][3] = "" + vehicles.get(i).getClassification();
-			cellData[i][4] = "" + vehicles.get(i).getAvailable();
-			cellData[i][5] = "" + vehicles.get(i).getPrice();
+			cellData[i][4] = "" + vehicles.get(i).getPrice();
 		}
 			
-	    String[] columnNames = { "Model", "Seats", "Special Features", "Classification", "Available", "Price"};
+	    String[] columnNames = { "Model", "Seats", "Special Features", "Classification", "Price"};
 
 	    DefaultTableModel model = new DefaultTableModel(cellData, columnNames);
 	    
@@ -127,11 +121,11 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 			int a = table.getSelectedRow();
 			if (a >= 0){
 				Vehicle v = vehicles.get(a);
-				v.setBooked(null, null);
 				((DefaultTableModel)table.getModel()).removeRow(a);
+				vehicles.remove(a);
 				
 				Subject bv = new Booking(null, v, null, null);
-				bv.registerObserver(app.cf.d);
+				bv.registerObserver(app.getDispatcherFromConcreteFramework());
 				BookVehicle b = (BookVehicle) bv;
 				b.bookVehicle();
 				
@@ -148,7 +142,7 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 			if (classificationBox.getSelectedIndex() == 0)
 				classification = "Family Car";
 			else if (classificationBox.getSelectedIndex() == 1)
-				classification = "Sports Car";
+				classification = "Sports";
 			else
 				classification = "Business";
 			
@@ -162,6 +156,12 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 			
 			Criteria criteria2 = new AndCriteria(new CriteriaClassification(classification), new CriteriaSeats(seats));
 			vehicles = criteria2.meetsCriteria(vehicles);
+			
+			//System.out.print(classification + seats);
+			
+			for (int i = 0; i < ((DefaultTableModel)table.getModel()).getRowCount() - 1; i++)
+				((DefaultTableModel)table.getModel()).removeRow(i);
+			
 			populateTable();
 		}
 		

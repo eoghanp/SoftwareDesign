@@ -1,9 +1,25 @@
 package Users;
 
-public class Employee {
+public class Employee extends Person{
 
-	public Employee() {
-		// TODO Auto-generated constructor stub
-	}
+    private double salary;
 
+    public Employee(String first, String last, String mail, String pass, String add, String phone, Double salary) {
+        super(first, last, mail, pass, add, phone);
+        this.salary = salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" + "salary=" + salary + '}';
+    }
+    
 }

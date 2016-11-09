@@ -12,8 +12,11 @@ public class Application
 	public void attachInterceptor()
 	{
 		Interceptor i = new ConcreteInterceptor();
-		cf.d.addInterceptor(i);
+		Dispatcher d = cf.getDispatcher();
+		d.addInterceptor(i);
 	}
 	
-	
+	public Dispatcher getDispatcherFromConcreteFramework(){
+		return cf.getDispatcher();
+	}
 }

@@ -1,9 +1,15 @@
 package Users;
 
-public class Customer {
+public class Customer extends Person{
 
-	public Customer() {
-		// TODO Auto-generated constructor stub
-	}
-
+	private static final String first = null;
+	private static final String last = null;
+	private static final String mail = null;
+	private static final String pass = null;
+	private static final String add = null;
+	private static final String phone = null;
+	
+    public Customer() {
+        super(first, last, mail, pass, add, phone);
+    }
 }

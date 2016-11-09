@@ -21,7 +21,7 @@ public class Booking implements BookVehicle, Subject{
 	private Vehicle vehicle;
 	private SimpleDateFormat startDate;
 	private SimpleDateFormat endDate;
-	private List<Dispatcher> observers = new ArrayList<Dispatcher>();
+	private List<Observer> observers;
 	
 
 	public Booking(Customer c, Vehicle v, SimpleDateFormat sd, SimpleDateFormat ed){
@@ -29,6 +29,7 @@ public class Booking implements BookVehicle, Subject{
 		this.vehicle = v;
 		this.startDate = sd;
 		this.endDate = ed;
+		observers = new ArrayList<Observer>();
 	}
 	
 	@Override
@@ -44,7 +45,6 @@ public class Booking implements BookVehicle, Subject{
 	@Override
 	public void bookVehicle() {
 		vehicle.setBooked(startDate, endDate);
-		//System.out.print("before registerObservers()");
 		notifyObservers();
 	}
 
@@ -63,9 +63,8 @@ public class Booking implements BookVehicle, Subject{
 	@Override
 	public void notifyObservers() 
 	{
-		//System.out.print("debug 1");
 		ContextObjectInterface coi = new ContextObject(vehicle);
-		for(Dispatcher d : observers)
+		for(Observer d : observers)
 		{
 			d.log(coi);
 		}

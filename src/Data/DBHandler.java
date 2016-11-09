@@ -200,5 +200,82 @@ public class DBHandler
 		return lastLine;
 	}
 	
+	public boolean getAvailability(Vehicle vehicle) throws IOException {
+
+		boolean available;
+		
+		try {
+			FileReader fr = new FileReader("vehicle.txt");
+			BufferedReader br = new BufferedReader(fr);
+			//Read file line by line
+			String line;
+			while ( ( line = br.readLine( ) ) != null ) {
+				String[] tokens = line.split("\\|");
+				available= Boolean.parseBoolean(tokens[4]);
+				
+				return vehicleAvailable(available);
+				
+			}
+			fr.close();
+			br.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	private boolean vehicleAvailable(boolean available) {
+		
+		if (available)
+			return true;
+		else
+			return false;
+		
+	}
+	
+	public int numberOfSeats(Vehicle vehicle) throws IOException {
+
+		int seats;
+		
+		try {
+			FileReader fr = new FileReader("vehicle.txt");
+			BufferedReader br = new BufferedReader(fr);
+			//Read file line by line
+			String line;
+			while ( ( line = br.readLine( ) ) != null ) {
+				String[] tokens = line.split("\\|");
+				seats = Integer.parseInt(tokens[1]);
+				
+				if (seats == 2)
+					return 2;
+				else if (seats == 5)
+					return 5;
+				else return 7;
+				
+				//seatsAvailable(seats);
+				
+			}
+			fr.close();
+			br.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
+
+	/*private int seatsAvailable(int seats) {
+		
+		if (seats == 2)
+			return 2;
+		else if (seats == 5)
+			return 5;
+		else return 7;
+		
+	}*/
+	
 }
 
