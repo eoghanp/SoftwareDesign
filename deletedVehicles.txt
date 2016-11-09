@@ -1,1 +1,9 @@
 
+v|5|tt|rr|true|23.0
+VehicleD|5|nONE|FamilyCar|true|20.0
+VehicleC|5|None|Family Car|true|40.0
+vehicleB|5|D|FAMILY CAR|true|20.0
+VehicleA|5|RED|Family Car|true|20.0
+Ford Focus|5|Air Conditioning|Family Car|true|70.0
+Ford Focus|2|None|Family|true|20.0
+Volkswagon Golf|5|Bluetooth|Sports|true|90.0

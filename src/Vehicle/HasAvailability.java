@@ -27,7 +27,7 @@ public class HasAvailability implements VehicleState {
 		
 		try {
 			DBHandler handler = DBHandler.getSingletonInstance();
-			if (!(handler.getListOfVehicles().isEmpty())) {
+			if (!(handler.getListOfAvailableVehicles().isEmpty())) {
 				vehicle.setVehicleState(vehicle.getHasVehicleState());
 				System.out.println("Vehicle DB is NOT empty");
 			}
