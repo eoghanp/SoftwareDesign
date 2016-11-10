@@ -3,6 +3,17 @@ package Interceptor;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * 6. iterate observers (callback)
+ * 6.1 dispatcher.log
+ * add/remove Interceptor, callback
+ * 
+ * Allows "Applications" to register and remove concrete "interceptors".
+ * Dispatchers registered concrete "interceptor" callbacks when event occurs.
+ * 
+ * When an event occurs, the framework notifies the appropriate dispatcher to invoke the callback.
+ */
+
 public class Dispatcher implements Observer 
 {
 	private List<Interceptor> listOfInterceptors;
@@ -21,6 +32,7 @@ public class Dispatcher implements Observer
 		listOfInterceptors.remove(i);
 	}
 
+	// callback
 	@Override
 	public void log(ContextObjectInterface coi) 
 	{	
@@ -28,7 +40,5 @@ public class Dispatcher implements Observer
 		{
 			i.logBooking(coi);
 		}
-	}
-	
-	
+	}	
 }

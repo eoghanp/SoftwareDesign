@@ -1,5 +1,13 @@
 package Interceptor;
 
+/*
+ * 2. Creates Interceptor - concreteInterceptor
+ * 3. Attaches Interceptor - attachInterceptor
+ * 
+ * Runs on top of the Concrete Framework.
+ * Instantiates "Concrete Interceptors" and registers them with dispatchers.
+ */
+
 public class Application 
 {	
 	public ConcreteFramework cf;
