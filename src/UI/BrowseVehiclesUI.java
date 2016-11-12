@@ -25,6 +25,8 @@ import Interceptor.Interceptor;
 import Transaction.BookVehicle;
 import Transaction.Booking;
 import Transaction.Subject;
+import Users.Customer;
+import Users.Person;
 import Vehicle.AndCriteria;
 import Vehicle.Criteria;
 import Vehicle.CriteriaAvailable;
@@ -140,7 +142,9 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 				((DefaultTableModel)table.getModel()).removeRow(a);
 				vehicles.remove(a);
 				
-				Subject bv = new Booking(null, v, null, null);
+				Customer p = new Customer();
+				
+				Subject bv = new Booking(p, v, null, null);
 				bv.registerObserver(dispatcher);
 				BookVehicle b = (BookVehicle) bv;
 				b.bookVehicle();

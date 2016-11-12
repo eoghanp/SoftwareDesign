@@ -11,9 +11,19 @@ public class PersonFacade {
         person = new ArrayList<Person>();
     }
    
-    public void addPerson(){
-        person.add(personFactory.createPerson("customer"));
-        person.add(personFactory.createPerson("employee"));
-    }
+    public Person addPerson(String type){
+    	if (type == "customer"){
+    		Person p = personFactory.createPerson("customer");
+    		person.add(p);
+    		return p;
+    	}
+    	else if (type == "employee"){
+    		Person p = personFactory.createPerson("employee");
+    		person.add(p);
+    		return p;
+    	}
+    	else
+    		return null;
+    }	
     
 }

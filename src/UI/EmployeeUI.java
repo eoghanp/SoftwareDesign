@@ -200,7 +200,7 @@ public class EmployeeUI extends JPanel implements ActionListener
 		// Create a Vehicle object for State DP 
 		Vehicle vehicle = new Vehicle();
 		// Calls checkAvailability in Vehicle Class, Vehicle class determines (Calls VehicleState) the correct state to execute.
-		vehicle.checkAvailability();
+		//vehicle.checkAvailability();
 
 	      // Now create matcher object.
 	      //Matcher m = isInteger.matcher(line);
@@ -216,10 +216,10 @@ public class EmployeeUI extends JPanel implements ActionListener
 			{
 				  JOptionPane.showMessageDialog(null, "You must enter details in all text fields", "Enter all data", 2);
 			}
-			else if(Pattern.matches(String.valueOf(seatNumbersDropDown.getSelectedItem()), "\\d+") == false)
+			/*else if(Pattern.matches(String.valueOf(seatNumbersDropDown.getSelectedItem()), "\\d+") == false)
 			{
 				JOptionPane.showMessageDialog(null, "The price must be a number", "Incorrect data type", 2);
-			}
+			}*/
 			
 			else //When fields are valid
 			{	
@@ -267,18 +267,23 @@ public class EmployeeUI extends JPanel implements ActionListener
 		{
 			// State DP
 			// Calls checkAvailability in Vehicle Class, Vehicle class determines (Calls VehicleState) the correct state to execute.
-			vehicle.checkAvailability();
+			//vehicle.checkAvailability();
 			
 			int row = vehicleTable.getSelectedRow();
 			//When no row is selected
-			if(row == -1){
+			if(row == -1) {
+				// State DP
+				// Calls checkAvailability in Vehicle Class, Vehicle class determines (Calls VehicleState) the correct state to execute.
+				vehicle.checkAvailability();
+				vehicle.checkAvailability();
 				JOptionPane.showMessageDialog(null,"Please select a vehicle to delete", "Select a Row", 2);
+				
 			}	
 			else
 			{
 			// State DP
 			// Calls checkAvailability in Vehicle Class, Vehicle class determines (Calls VehicleState) the correct state to execute.
-			vehicle.checkAvailability();
+			//vehicle.checkAvailability();
 			try {
 				//Gets the value from the Model column of the selected row
 				String selectedItem = (vehicleTable.getModel().getValueAt(row, 0).toString());
@@ -293,16 +298,15 @@ public class EmployeeUI extends JPanel implements ActionListener
 				handler.deleteVehicle(selectedItem);
 				//Refreshes the table to show existing vehicles
 				refreshAvailableVehiclesTable();
-				JOptionPane.showMessageDialog(null,selectedItem + " vehicle deleted");
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 				
 				// State DP
 				// Calls checkAvailability in Vehicle Class, Vehicle class determines (Calls VehicleState) the correct state to execute.
 				vehicle.checkAvailability();
+				JOptionPane.showMessageDialog(null,selectedItem + " vehicle deleted");
 				
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		
@@ -337,7 +341,8 @@ public class EmployeeUI extends JPanel implements ActionListener
 				}
 				refreshAvailableVehiclesTable();
 				refreshBookedVehiclesTable();
-				JOptionPane.showMessageDialog(null,collectedModel + " has been collected from customer.\n\nIt is available for rent again.", "Vehicle Successfully returned", 1);
+				JOptionPane.showMessageDialog(null,collectedModel + " has been collected from customer.\n\nIt is available for rent again.", 
+						"Vehicle Successfully returned", 1);
 			}
 			else{
 				JOptionPane.showMessageDialog(null,"Please select a vehicle to collect", "Select a Vehicle", 2);
