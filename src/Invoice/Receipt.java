@@ -55,11 +55,6 @@ public class Receipt extends ReceiptComponent {
 		this.cost = cost;
 	}
 	
-	
-	
-	
-	
-	
 	@Override
 	public void prtReceipt() {
 		// TODO Auto-generated method stub
@@ -79,8 +74,5 @@ public class Receipt extends ReceiptComponent {
 			} catch (IOException e) {
 			    //exception handling left as an exercise for the reader
 			}
-	
-	
-
-}
+	}
 }

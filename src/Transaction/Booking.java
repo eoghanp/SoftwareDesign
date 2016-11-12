@@ -36,8 +36,8 @@ public class Booking implements BookVehicle, Subject{
 	public void printReceipt(){
 		ReceiptComponent myReceipt = new Receipt(null, null, null, 0, 0);
 		myReceipt = new CompanyName(myReceipt);
-		myReceipt = new CustomerInfo(myReceipt);
-		myReceipt = new VehicleInfo(myReceipt);
+		myReceipt = new CustomerInfo(myReceipt, customer);
+		myReceipt = new VehicleInfo(myReceipt, vehicle);
 		myReceipt = new Invoice.DateFooter(myReceipt);
 		myReceipt.prtReceipt();
 	}

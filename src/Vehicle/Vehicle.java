@@ -96,4 +96,9 @@ public class Vehicle
 	public boolean getAvailable() {
 		return this.available;
 	}
+	
+	@Override
+    public String toString() {
+        return "Vehicle{" + "model=" + model + ", seats=" + seats + ", specialFeatures=" + specialFeatures + ", vehicleState=" + vehicleState + '}';
+    }
 }

@@ -77,4 +77,10 @@ public class Person {
 			   telephone;
 		return details;
 	}
+	
+	@Override
+    public String toString() {
+        return "Person{" + "FirstName=" + FirstName + ", LastName=" + LastName + ", email=" + email + 
+        		", password=" + password + ", address=" + address + ", telephone=" + telephone + '}';
+    }
 }
