@@ -19,7 +19,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Data.DBHandler;
-import Interceptor.Application;
 import Interceptor.ConcreteInterceptor;
 import Interceptor.Dispatcher;
 import Interceptor.Interceptor;
@@ -39,16 +38,21 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 	private JScrollPane pane;
 	private JComboBox<String> classificationBox;
 	private JComboBox<String> seatsBox;
-	private Application app;
+	private Dispatcher dispatcher;
+	private Interceptor interceptor;
 
 	public BrowseVehiclesUI() {
 		setLayout(null);
 		
-		app = new Application();
-		app.attachInterceptor();
+		dispatcher = new Dispatcher();
+		interceptor = new ConcreteInterceptor();
+		dispatcher.addInterceptor(interceptor);
 		
 		getVehicleList();		
 		populateTable();
+		pane = new JScrollPane(table);
+		pane.setBounds(10, 50, 650, 250);
+	    add(pane);
 		
 		JLabel Vehicleslbl = new JLabel("Available Vehicles");
 		Vehicleslbl.setBounds(10, 10, 180, 25);
@@ -114,9 +118,6 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 	    DefaultTableModel model = new DefaultTableModel(cellData, columnNames);
 	    
 	    table = new JTable(model);
-	    pane = new JScrollPane(table);
-		pane.setBounds(10, 50, 650, 250);
-	    add(pane);
 	}
 
 	@Override
@@ -140,7 +141,7 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 				vehicles.remove(a);
 				
 				Subject bv = new Booking(null, v, null, null);
-				bv.registerObserver(app.getDispatcherFromConcreteFramework());
+				bv.registerObserver(dispatcher);
 				BookVehicle b = (BookVehicle) bv;
 				b.bookVehicle();
 				
@@ -172,15 +173,11 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 			Criteria criteria2 = new AndCriteria(new CriteriaClassification(classification), new CriteriaSeats(seats));
 			vehicles = criteria2.meetsCriteria(vehicles);
 			
-			//System.out.print(classification + seats);
-			
-			for (int i = 0; i < ((DefaultTableModel)table.getModel()).getRowCount() - 1; i++)
-				((DefaultTableModel)table.getModel()).removeRow(i);
-			
-			populateTable();
+			refreshBrowseVehiclesTable();
 		}
 		
 		else if ("reset" == e.getActionCommand()){
+			getVehicleList();	
 			refreshBrowseVehiclesTable();
 		}
 		
@@ -202,7 +199,6 @@ public class BrowseVehiclesUI extends JPanel implements ActionListener{
 	public void refreshBrowseVehiclesTable()
 	{
 		pane.getViewport().remove(table);
-		getVehicleList();	
 		populateTable();
 		pane.getViewport().add(table, null);
 	}

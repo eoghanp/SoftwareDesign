@@ -15,7 +15,7 @@ public class CriteriaClassification implements Criteria {
 		List<Vehicle> newList = new ArrayList<Vehicle>();
 		
 		for (Vehicle v: vehicles)
-			if (v.getClassification().equalsIgnoreCase(classification))
+			if (v.getClassification().contains(classification))
 				newList.add(v);
 		
 		return newList;
